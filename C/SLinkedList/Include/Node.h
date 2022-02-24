@@ -5,19 +5,12 @@
 
 #endif //_NODE_H
 
-#define INIT_NODE (X) Node X = { .mData = 0 , .mNextObj  = NULL}
+#define INIT_NODE(X) ; Node X = { .mData = 0 , .mNextObj  = NULL , .setData = &setData, .getData = &getData, .setNextObj = &setNextObj, .getNextObj = &getNextObj} 
 
 typedef struct tagNODE {
     
     int mData ; 
     struct tagNODE* mNextObj ; 
-    
-    void (*setData)(struct tagNODE*,int) ; 
-    void (*setNextObj) (struct tagNODE*, struct tagNODE*) ; 
-    
-    
-    int (*getData)(struct tagNODE*) ; 
-    struct tagNODE* (*getNextObj)(struct tagNODE*);
     
 }Node, *pNode ; 
 
