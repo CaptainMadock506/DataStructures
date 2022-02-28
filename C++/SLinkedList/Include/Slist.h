@@ -5,7 +5,7 @@
 
 #endif //_SLIST_H
 #include <cstddef> 
-
+#include <iostream>
 /*
 
 functionName:-
@@ -80,7 +80,7 @@ namespace DataStruct{
         void add(const T& data, bool head_flag = false);
         void add(const T& data, const int& index);
         T* remove(bool head_flag = false);
-        T* remove(const int& element);
+        T* remove(const T& element);
         T* removeAt(const int& index);
         void sort();
         T* getItem(const int& index);
@@ -761,7 +761,7 @@ caution:- NONE
         else if(index <= this->mSize - 1){
             
             Node* temp  = nullptr ; 
-            for(temp = this->mHead, int i = 0; i == index ; i++ ,temp= temp->getNextObj());
+            for(temp = this->mHead, int i = 0; i != index ; i++ ,temp= temp->getNextObj());
             temp->setData(data);
             
         }else
@@ -786,5 +786,89 @@ caution:- NONE
             return this->deleteFromHead();
         else 
             return this->deleteFromTail();
+    }
+    
+    /*
+    
+    functionName:- (Overloaded function) remove 
+    
+    Usage:- remove from the linked list based on the element passed as an argument.
+    
+    Return type:- pointer to user-defined datatype.
+    
+    caution:- the returned data must be freed.
+    
+    */
+    
+    T* SList<T>::remove(const T& element){
+        return this->deleteItem(element);
+    }
+    
+    /*
+    
+    functionName:-  removeAt 
+    
+    Usage:- remove from the linked list based on index passed as an argument.
+    
+    Return type:- pointer to user-defined datatype.
+    
+    caution:- the returned data must be freed.
+    
+    */
+    
+    T* SList<T>::removeAt(const int& index){
+        T t_data = nullptr ; 
+        
+        if(this->mHead == nullptr)
+            return t_data  ;
+        else if(index <= this->mSize - 1){
+            
+            
+            Node* prevNode = nullptr; 
+            for(prevNode = this->mHead, int i = 0; i !=  index - 1; i++, temp = temp->getNextObj());
+            
+            temp = prevNode->getNextObj();
+            t_data = new T();
+            *t_data = temp->getData();
+            prevNode->setNextObj(temp->getNextObj());
+            delete temp ; 
+            
+        }
+        
+        return t_data ;
+    }
+    
+    /*
+    
+    functionName:-  sort 
+    
+    Usage:- sort the LinkeList.
+    
+    Return type:- NONE
+    
+    caution:- NONE
+    
+    */
+    
+    void SList<T>::sort(){
+        this->mergeSort(this->mHead);
+    }
+    
+    /*
+    
+    functionName:-  displayList 
+    
+    Usage:- Display the LinkeList.
+    
+    Return type:- NONE
+    
+    caution:- NONE
+    
+    */
+    
+    void SList<T>::displayList(){
+        for(Node* temp = this->mHead ; temp->getNextObj != nullptr; temp = temp->getNextObj()){
+            std::cout << "Data : " << temp->getData() << " , NextObj Address : " << temp->getNextObj() << std::endl; 
+        }
     }
 }
